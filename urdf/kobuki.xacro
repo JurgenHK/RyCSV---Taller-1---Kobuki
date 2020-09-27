@@ -1,0 +1,141 @@
+<?xml version="1.0" ?>
+<!-- 
+  UNIVERSIDAD NACIONAL DE COLOMBIA
+  DEPARTAMENTO DE ING. MECANICA Y MECATRONICA
+  TALLER 1 / RyCSV 2020-2
+  PROF: FLAVIO PRIETO
+  
+  URDF KOBUKI (SIMPLIFIED) DESCRIPTION 
+
+  AUTHOR: JURGEN H. KREJCI MUNOZ
+  ROBOT: KOBUKI
+  MAIL: jhkrejcim@unal.edu.co
+  VERSION: 1.0
+  TESTED ON ROS NOETIC (UBUNTU 20.04.1 LTS)
+-->
+
+<robot name="kobuki" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- Include -->
+    <xacro:include filename="$(find kobuki_sim)/urdf/links_joints_def.xacro" />
+    <!-- END - Include -->
+
+
+    <!-- Material Definition-->
+    <material name="cyan">
+        <color rgba="0.25 1.0 1.0 1.0"/>
+    </material>
+    
+    <material name="black">
+        <color rgba="0.0 0.0 0.0 1.0"/>
+    </material>
+
+    <material name="grey">
+        <color rgba="0.47 0.47 0.47 1.0"/>
+    </material>
+    
+
+    <!-- /////// Links and joints /////// -->
+
+    <!-- Marco de referencia-->
+    <link name="base_footprint"> 
+
+    </link>  
+
+
+    <xacro:fixed_joint name="fixed_base" 
+    origin_xyz = "0.0 0.0 0.055"
+    origin_rpy = "0.0 0.0 0.0" 
+    parent = "base_footprint"
+    child  = "base"
+    />
+
+
+    <xacro:cylinder_link name="base"
+    origin_xyz ="0.0 0.0 0.0"
+    origin_rpy ="0.0 0.0 0.0"
+    material ="cyan"
+    radius ="0.175"
+    width="0.08"
+    />
+
+    <xacro:wheel_joint name= "left_joint"
+    origin_rpy = "$(eval -pi/2) 0 0"
+    origin_xyz = "0 0.115 -0.02"
+    parent = "base"
+    child = "left_wheel"
+    limit_e = "10"
+    limit_v = "6.0"
+    />
+
+    <xacro:wheel_link name="left_wheel"
+    origin_xyz = "0.0 0.0 0.0"
+    origin_rpy = "0.0 0.0 0.0"
+    material = "black"
+    radius = "0.035"
+    width = "0.021"
+    />
+
+    <xacro:wheel_joint name= "right_joint"
+    origin_rpy = "$(eval -pi/2) 0 0"
+    origin_xyz = "0 -0.115 -0.02"
+    parent = "base"
+    child = "right_wheel"
+    limit_e = "10"
+    limit_v = "6.0"
+    />
+
+    <xacro:wheel_link name="right_wheel"
+    origin_xyz = "0.0 0.0 0.0"
+    origin_rpy = "0.0 0.0 0.0"
+    material = "black"
+    radius = "0.035"
+    width = "0.021"
+    />
+
+    <xacro:fixed_joint name="back_joint" 
+    origin_xyz = "-0.115 0 -0.03"
+    origin_rpy = "0.0 0.0 0.0" 
+    parent = "base"
+    child  = "back_sphere"
+    />
+
+    <xacro:sphere_link name = "back_sphere"
+    origin_xyz = "0.0 0.0 0.0"
+    origin_rpy = "0.0 0.0 0.0"
+    material = "grey"
+    radius = "0.025"
+    />
+
+    <xacro:fixed_joint name="front_joint" 
+    origin_xyz = "0.115 0 -0.03"
+    origin_rpy = "0.0 0.0 0.0" 
+    parent = "base"
+    child  = "front_sphere"
+    />
+
+    <xacro:sphere_link name = "front_sphere"
+    origin_xyz = "0.0 0.0 0.0"
+    origin_rpy = "0.0 0.0 0.0"
+    material = "grey"
+    radius = "0.024"
+    />
+
+    <xacro:wheel_transmission name = "left_wheel_transmission" 
+    joint = "left_joint"
+    />
+
+    <xacro:wheel_transmission name = "right_wheel_transmission" 
+    joint = "right_joint"
+    />
+
+    <!-- Gazebo ROS Plugin-->
+    <!-- Plugin para que Gazebo pueda entender los controladores-->
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace>/</robotNamespace>
+        </plugin>
+    </gazebo>
+
+</robot>
+

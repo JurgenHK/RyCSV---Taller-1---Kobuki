@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+
+<!-- 
+  UNIVERSIDAD NACIONAL DE COLOMBIA
+  DEPARTAMENTO DE ING. MECANICA Y MECATRONICA
+  TALLER 1 / RyCSV 2020-2
+  PROF: FLAVIO PRIETO
+  
+  URDF KOBUKI (SIMPLIFIED) DESCRIPTION 
+  MACRO DEFINITION
+
+  AUTHOR: JURGEN H. KREJCI MUNOZ
+  ROBOT: KOBUKI
+  MAIL: jhkrejcim@unal.edu.co
+  VERSION: 1.0
+  TESTED ON ROS NOETIC (UBUNTU 20.04.1 LTS)
+-->
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    
+    <xacro:macro name="wheel_joint" params="name origin_rpy origin_xyz parent child limit_e limit_v">
+        <joint name="${name}" type="continuous">
+            <axis xyz="0 0 1.0" />
+            <limit effort="${limit_e}" velocity="${limit_v}" />
+            <origin rpy="${origin_rpy}" xyz="${origin_xyz}" />
+            <parent link="${parent}" />
+            <child link="${child}" />
+        </joint>
+    </xacro:macro>
+
+    <xacro:macro name="fixed_joint" params="name origin_rpy origin_xyz parent child">
+        <joint name="${name}" type="fixed">
+            <origin rpy="${origin_rpy}" xyz="${origin_xyz}" />
+            <parent link="${parent}" />
+            <child link="${child}" />
+        </joint>
+    </xacro:macro>
+
+    <xacro:macro name="wheel_link" params="name origin_xyz origin_rpy material radius width">
+        <link name="${name}">
+            <visual>
+                <origin rpy="${origin_rpy}" xyz="${origin_xyz}" />
+                <geometry>
+                    <cylinder radius="${radius}" length="${width}"/>
+                </geometry>
+                <material name="${material}"/>
+            </visual>
+            <collision>
+                <origin rpy="${origin_rpy}" xyz="${origin_xyz}" />
+                <geometry>
+                    <sphere radius="${radius}"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <mass value="1.0"/>
+                <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+            </inertial>
+        </link>
+    </xacro:macro>
+
+    <xacro:macro name="sphere_link" params="name origin_xyz origin_rpy material radius">
+        <link name="${name}">
+            <visual>
+                <origin rpy="${origin_rpy}" xyz="${origin_xyz}" />
+                <geometry>
+                    <sphere radius="${radius}"/>
+                </geometry>
+                <material name="${material}"/>
+            </visual>
+            <collision>
+                <origin rpy="${origin_rpy}" xyz="${origin_xyz}" />
+                <geometry>
+                    <sphere radius="${radius}"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <mass value="1.0"/>
+                <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+            </inertial>
+        </link>
+    </xacro:macro>
+
+    <xacro:macro name="cylinder_link" params="name origin_xyz origin_rpy material radius width">
+        <link name="${name}">
+            <visual>
+                <origin rpy="${origin_rpy}" xyz="${origin_xyz}" />
+                <geometry>
+                    <cylinder radius="${radius}" length="${width}"/>
+                </geometry>
+                <material name="${material}"/>
+            </visual>
+            <collision>
+                <origin rpy="${origin_rpy}" xyz="${origin_xyz}" />
+                <geometry>
+                    <cylinder radius="${radius}" length="${width}"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <mass value="1.0"/>
+                <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+            </inertial>
+        </link>
+    </xacro:macro>
+    
+    
+    <xacro:macro name="wheel_transmission" params="name joint">
+        <transmission name="${name}">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${joint}">
+                <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+            </joint>
+            <actuator name="motor_${name}">
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+        </transmission>
+    </xacro:macro>
+
+</robot>
