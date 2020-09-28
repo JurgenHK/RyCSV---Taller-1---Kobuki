@@ -7,7 +7,8 @@ class logger:
     def __init__(self):
         self.v = 0
         self.w = 0
-        self.multiplier = 1
+        self.multiplier_lineal = 1
+        self.multiplier_angular = 1
 
         # Collect events until released
         self.listener = keyboard.Listener(
@@ -53,23 +54,23 @@ class logger:
 
     def forwards(self):
         #print("Case Forward")
-        self.v = 1*self.multiplier
-        self.w = 0*self.multiplier
+        self.v = 1*self.multiplier_lineal
+        self.w = 0*self.multiplier_angular
     
     def backwards(self):
         #print("Case Back")
-        self.v = -1*self.multiplier
-        self.w = 0*self.multiplier
+        self.v = -1*self.multiplier_lineal
+        self.w = 0*self.multiplier_angular
 
     def left(self):
         #print("Case Left")
-        self.v = 0*self.multiplier
-        self.w = 1*self.multiplier
+        self.v = 0*self.multiplier_lineal
+        self.w = 1*self.multiplier_angular
 
     def right(self):
         #print("Case Right")
-        self.v = 0*self.multiplier
-        self.w = -1*self.multiplier
+        self.v = 0*self.multiplier_lineal
+        self.w = -1*self.multiplier_angular
     
     def stop(self):
         #print("Case Stop")
@@ -78,11 +79,14 @@ class logger:
 
     def increment(self):
         print("Case Increment")
-        self.multiplier += 0.1
+        self.multiplier_lineal += 0.1 if self.multiplier_lineal < 1 else 0
+        self.multiplier_angular += 2.0 if self.multiplier_angular < 180 else 0
+         
 
     def decrement(self):
         print("Case Increment")
-        self.multiplier -= 0.1
+        self.multiplier_lineal -= 0.5 if self.multiplier_lineal > 0 else 0
+        self.multiplier_angular -= 2.0 if self.multiplier_angular > -0 else 0
 
     def get_targets(self):
         return self.v,self.w

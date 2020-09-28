@@ -59,6 +59,10 @@
     width="0.08"
     />
 
+    <gazebo reference="base">
+        <material>Gazebo/BlueGlow</material>
+    </gazebo>
+
     <xacro:wheel_joint name= "left_joint"
     origin_rpy = "$(eval -pi/2) 0 0"
     origin_xyz = "0 0.115 -0.02"
@@ -75,6 +79,10 @@
     radius = "0.035"
     width = "0.021"
     />
+
+    <gazebo reference="left_wheel">
+        <material>Gazebo/FlatBlack</material>
+    </gazebo>
 
     <xacro:wheel_joint name= "right_joint"
     origin_rpy = "$(eval -pi/2) 0 0"
@@ -93,6 +101,10 @@
     width = "0.021"
     />
 
+    <gazebo reference="right_wheel">
+        <material>Gazebo/FlatBlack</material>
+    </gazebo>
+
     <xacro:fixed_joint name="back_joint" 
     origin_xyz = "-0.115 0 -0.03"
     origin_rpy = "0.0 0.0 0.0" 
@@ -107,6 +119,10 @@
     radius = "0.025"
     />
 
+    <gazebo reference="back_sphere">
+        <material>Gazebo/Grey</material>
+    </gazebo>
+
     <xacro:fixed_joint name="front_joint" 
     origin_xyz = "0.115 0 -0.03"
     origin_rpy = "0.0 0.0 0.0" 
@@ -120,6 +136,10 @@
     material = "grey"
     radius = "0.024"
     />
+
+    <gazebo reference="front_sphere">
+        <material>Gazebo/Grey</material>
+    </gazebo>
 
     <xacro:wheel_transmission name = "left_wheel_transmission" 
     joint = "left_joint"

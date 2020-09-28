@@ -40,9 +40,9 @@ if __name__ == '__main__':
 
     Jacobian = np.matmul(np.linalg.pinv(J2),J1)
 
-    print ("J1: \n", J1)
-    print ("J2: \n", J2)
-    print ("Jacobian: \n", Jacobian)
+    #print ("J1: \n", J1)
+    #print ("J2: \n", J2)
+    #print ("Jacobian: \n", Jacobian)
 
 
     #Inicialización ROS
@@ -57,8 +57,9 @@ if __name__ == '__main__':
     keyboard_pub = rospy.Publisher(nameKeyboardTopic, Twist, queue_size=10)
     left_wheel_pub = rospy.Publisher(nameLeftWheelTopic, Float64, queue_size=10)
     right_wheel_pub = rospy.Publisher(nameRightWheelTopic, Float64, queue_size=10)
-
+    
     teclado = logger()
+    rospy.loginfo("Keyboard Capture init")
 
     rate = rospy.Rate(20) # 20 Hz
 
@@ -67,8 +68,8 @@ if __name__ == '__main__':
         #Obtener v y w de la entrada del teclado
 
         x, z = teclado.get_targets()
-        print("Velocidad Angular: " + str(z))
-        print("Velocidad Lineal: " + str(x))
+        #print("Velocidad Angular: " + str(z))
+        #print("Velocidad Lineal: " + str(x))
 
         vel_msg = Twist()
 
@@ -78,6 +79,8 @@ if __name__ == '__main__':
         vel_msg.angular.x = 0
         vel_msg.angular.y = 0
         vel_msg.angular.z = z
+
+        rospy.loginfo(vel_msg)
 
         keyboard_pub.publish(vel_msg)
 

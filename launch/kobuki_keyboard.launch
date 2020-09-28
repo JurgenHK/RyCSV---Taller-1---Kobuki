@@ -37,7 +37,7 @@
             -model kobuki"
 />
 
-<!-- RQT GUI-->
-<node name="rqt_gui" pkg="rqt_gui" type="rqt_gui"/>
+<!-- Keyboard Node -->
+<node pkg="kobuki_sim" type="keyboard_node.py" name="keyboard"/>
 
 </launch>
