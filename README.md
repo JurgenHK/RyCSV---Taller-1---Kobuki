@@ -5,6 +5,8 @@ This is the ROS package solution for the Workshop #1 from the RyCSV course at UN
 
 ![KOBUKI RVIZ](https://i.ibb.co/60BQPDV/rviz-kobuki.png)
 
+Model description based on [Kobuki robot](http://kobuki.yujinrobot.com/about2/). (Model parameters aviable [here](https://yujinrobot.github.io/kobuki/enAppendixKobukiParameters.html))
+
 ## Usage
 
 **NOTE** 
